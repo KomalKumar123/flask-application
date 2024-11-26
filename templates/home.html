@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Household Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Home Ease</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Cleaning Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/beauty_services">Beauty services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Handyman services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">security services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">pet-care services</a>
+                    </li>
+                </ul>
+                <form class="d-flex me-3" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-light" type="submit">Search</button>
+                </form>
+                <div class="dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                            <path fill-rule="evenodd"
+                                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                        </svg>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                data-bs-target="#loginModal">Login</a></li>
+                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#signUpModal">Sign
+                                Up</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero-section">
+        <h1>Welcome to Home Ease</h1>
+        <p>Your one-stop solution for household services</p>
+        <a href="#" class="btn btn-primary">Explore Services</a>
+    </div>
+
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Cards for services -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="/static/images/house_services.jpg" class="card-img-top" alt="Housekeeping">
+                    <div class="card-body">
+                        <h5 class="card-title">Housekeeping & Cleaning Services</h5>
+                        <p class="card-text">Maintaining cleanliness and hygiene in your home.</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Add other cards as per previous example -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="/static/images/beauty-services.webp" class="card-img-top" alt="Beauty">
+                    <div class="card-body">
+                        <h5 class="card-title">Beauty & Personal Care</h5>
+                        <p class="card-text">Grooming and aesthetic services for every occasion.</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="/static/images/handyman.jpg" class="card-img-top" alt="Handyman">
+                    <div class="card-body">
+                        <h5 class="card-title">Handyman & Maintenance</h5>
+                        <p class="card-text">Repairs, installations, and general maintenance.</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="/static/images/lawn-services.jpg" class="card-img-top" alt="Lawn">
+                    <div class="card-body">
+                        <h5 class="card-title">Lawn & Garden Services</h5>
+                        <p class="card-text">Landscaping, lawn care, and gardening services.</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="/static/images/security.jpg" class="card-img-top" alt="Security">
+                    <div class="card-body">
+                        <h5 class="card-title">Security & Surveillance</h5>
+                        <p class="card-text">Protecting your home with the latest technology.</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="/static/images/pet-care.jpg" class="card-img-top" alt="Pet Care">
+                    <div class="card-body">
+                        <h5 class="card-title">Pet Care Services</h5>
+                        <p class="card-text">Pampering Your Furry Friends with Love and Care!</p>
+                        <a href="#" class="btn btn-primary">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Sign Up Modal -->
+        <div class="modal fade" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="signUpModalLabel">Sign Up</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Please select the type of user:</p>
+                        <!-- Dropdown for User Type Selection -->
+                        <div class="mb-3">
+                            <label for="userType" class="form-label">Select User Type</label>
+                            <select class="form-select" id="userType">
+                                <option value="customer">Customer</option>
+                                <option value="serviceProvider">Service Provider</option>
+                            </select>
+                        </div>
+    
+                        <!-- Forms (Hidden initially) -->
+                        <form id="customerForm" class="mt-4" style="display: none;" action="/signup" method="post">
+                            <h5>Customer Registration</h5>
+                            <div class="mb-3">
+                                <label for="custUsername" class="form-label">Name</label>
+                                <input type="text" class="form-control" name="name" id="custUsername" placeholder="Enter your username">
+                            </div>
+    
+                            <div class="mb-3">
+                                <label for="custEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" name="email" id="custEmail" placeholder="Enter your email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="custPhone" class="form-label">Phone Number</label>
+                                <input type="text" class="form-control" name="phone_number" id="custPhone" placeholder="Enter your phone number">
+                            </div>
+                            <div class="mb-3">
+                                <label for="custAddress" class="form-label">Address</label>
+                                <input type="text" class="form-control" id="custAddress" name="address" placeholder="Enter your address">
+                            </div>
+                            <div class="mb-3">
+                                <label for="custCreatePassword" class="form-label">Create Password</label>
+                                <input type="password" class="form-control" name="create_password" id="custCreatePassword"
+                                    placeholder="Create a password">
+                            </div>
+                            <div class="mb-3">
+                                <label for="custConfirmPassword" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" name="confirm_password" id="custConfirmPassword"
+                                    placeholder="Confirm your password">
+                            </div>
+                            <button type="submit" class="btn btn-secondary">Register as Customer</button>
+                        </form>
+    
+                        <!-- Service Provider Registration Form -->
+                        <form id="serviceProviderForm" class="mt-4" style="display: none;" method="post" action="/signup">
+                            <h5>Service Provider Registration</h5>
+                            <div class="mb-3">
+                                <label for="spUsername" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="spUsername" name="name" placeholder="Enter your username">
+                            </div>
+                            <div class="mb-3">
+                                <label for="spEmail" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="spEmail" name="email" placeholder="Enter your email">
+                            </div>
+                            <div class="mb-3">
+                                <label for="spPhone" class="form-label">Phone Number</label>
+                                <input type="text" class="form-control" name="phone_number" id="spPhone"
+                                    placeholder="Enter your phone number">
+                            </div>
+                            <div class="mb-3">
+                                <label for="spExperience" class="form-label">Experience (Years)</label>
+                                <input type="number" class="form-control" name="experience" id="spExperience"
+                                    placeholder="Enter your experience">
+                            </div>
+                            <div class="mb-3">
+                                <label for="spServiceType" class="form-label">Service Type(s)</label>
+                                <input type="text" class="form-control" id="spServiceType"
+                                    placeholder="Plumbing, Barber, etc.">
+                            </div>
+                            <div class="mb-3">
+                                <label for="spPassword" class="form-label">Create Password</label>
+                                <input type="password" class="form-control" name="create_password" id="spPassword" placeholder="Create a password">
+                            </div>
+                            <div class="mb-3">
+                                <label for="spConfirmPassword" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" name="confirm_password" id="spConfirmPassword"
+                                    placeholder="Confirm your password">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Register as Service Provider</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="loginEmail" class="form-label">Email ID (Username)</label>
+                            <input type="email" class="form-control" id="loginEmail" placeholder="Enter your email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="loginPassword" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="loginPassword"
+                                placeholder="Enter your password">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <p>New user?</p>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#signUpModal"
+                            class="text-decoration-none">Register as Customer</a>
+                        <br />
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#signUpModal"
+                            class="text-decoration-none">Register as Service Professional</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Home Ease. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Handling toggle between Customer and Service Provider forms based on dropdown selection
+            document.getElementById('userType').addEventListener('change', function () {
+                const userType = this.value;
+                if (userType === 'customer') {
+                    document.getElementById('customerForm').style.display = 'block';
+                    document.getElementById('serviceProviderForm').style.display = 'none';
+                } else if (userType === 'serviceProvider') {
+                    document.getElementById('serviceProviderForm').style.display = 'block';
+                    document.getElementById('customerForm').style.display = 'none';
+                }
+            });
+
+            // Initial check to set the correct form visible when the modal opens
+            const userType = document.getElementById('userType').value;
+            if (userType === 'customer') {
+                document.getElementById('customerForm').style.display = 'block';
+                document.getElementById('serviceProviderForm').style.display = 'none';
+            } else {
+                document.getElementById('serviceProviderForm').style.display = 'block';
+                document.getElementById('customerForm').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
