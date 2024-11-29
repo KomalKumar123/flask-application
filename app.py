@@ -197,14 +197,18 @@ def signup():
         if role == "customer":
             new_user.address = request.form['address']
         elif role == "serviceProvider":
-            new_user.service_type = request.form['service_type']
-            # Creating a new professional record
-            professional_details = ProfessionalDetails(user=new_user)
-            db.session.add(professional_details)
-            db.session.commit()
-            new_user.professional_details = professional_details
+            # Get service type from the dropdown
+            service_type = request.form['service_type']
 
-        session['logged_in'] = True
+            # Create a new ProfessionalDetails entry
+            professional_details = ProfessionalDetails(
+                user=new_user,
+                service_type=service_type,
+                years_experience=request.form['experience']
+            )
+
+            db.session.add(professional_details)
+
         db.session.add(new_user)
         db.session.commit()
         message = {"type":"success","body":"User Created Successfully"}
@@ -233,19 +237,18 @@ def login():
 
 from flask import jsonify
 
-@app.route('/api/book_service', methods=['POST'])
-def book_service_api():
-    # Check if the user is logged in
+@app.route('/book_service', methods=['POST'])
+def book_service():
     if not session.get('logged_in'):
         return jsonify({"status": "error", "message": "You must be logged in to book a service."}), 401
-    
-    # Get service ID and user ID from the request
-    service_id = request.json.get('service_id')
-    user_id = session.get('user_id')  # Assume user ID is stored in the session
+
+    # Get data from the form
+    service_id = request.form.get('service_id')
+    user_id = session.get('user_id')  # Assume user_id is stored in the session
 
     if not service_id:
         return jsonify({"status": "error", "message": "Service ID is required."}), 400
-    
+
     # Check if the service exists
     service = Service.query.get(service_id)
     if not service:
@@ -255,12 +258,14 @@ def book_service_api():
     new_request = ServiceRequest(
         service_id=service_id,
         customer_id=user_id,
-        service_status='requested'
+        service_status='requested',  # Initial status
+        remarks=''  # Add remarks if needed
     )
+
     db.session.add(new_request)
     db.session.commit()
 
-    return jsonify({"status": "success", "message": "Booking successful!"}), 200
+    return jsonify({"status": "success", "message": "Service booked successfully!"}), 200
 
 
 
