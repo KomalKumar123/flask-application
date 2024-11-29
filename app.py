@@ -256,7 +256,7 @@ def book_service():
     # Check if the service exists
     service = Service.query.get(service_id)
     if not service:
-        return jsonify({"status": "error", "message": "Service not found."}), 404
+        return flash("Service not found.", "danger")
 
     # Create a new service request
     new_request = ServiceRequest(
@@ -268,8 +268,9 @@ def book_service():
 
     db.session.add(new_request)
     db.session.commit()
+    flash("Service booked successfully!", "success")
+    return redirect(url_for('home'))
 
-    return jsonify({"status": "success", "message": "Service booked successfully!"}), 200
 
 @app.route('/professional_dashboard')
 def professional_dashboard():
