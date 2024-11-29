@@ -22,8 +22,8 @@
         <div class="card mb-3">
             <div class="row g-0 align-items-center">
                 <div class="col-md-4">
-                    <img src="static\images\default_cleaning.jpg"
-                        class="img-fluid rounded-start" alt="{{ service.name }}">
+                    <img src="static\images\default_cleaning.jpg" class="img-fluid rounded-start"
+                        alt="{{ service.name }}">
                 </div>
                 <div class="col-md-8">
                     <div class="card-body">
@@ -31,38 +31,10 @@
                         <p class="card-text"><strong>Description:</strong> {{ service.description }}</p>
                         <p class="card-text"><strong>Base Price:</strong> ${{ service.base_price }}</p>
                         <p class="card-text"><strong>Estimated Time:</strong> {{ service.time_required }} minutes</p>
+                        <!-- Book Now Form -->
                         <form action="/book_service" method="post" class="mt-3">
                             <input type="hidden" name="service_id" value="{{ service.id }}">
-                            <button class="btn btn-success book-now" data-service-id="{{ service.id }}">Book
-                                Now</button>
-
-                            <script>
-                                document.querySelectorAll('.book-now').forEach(button => {
-                                    button.addEventListener('click', () => {
-                                        const serviceId = button.getAttribute('data-service-id');
-
-                                        fetch('/api/book_service', {
-                                            method: 'POST',
-                                            headers: {
-                                                'Content-Type': 'application/json',
-                                            },
-                                            body: JSON.stringify({ service_id: serviceId }),
-                                        })
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                if (data.status === "success") {
-                                                    alert(data.message);
-                                                } else {
-                                                    alert(`Error: ${data.message}`);
-                                                }
-                                            })
-                                            .catch(error => {
-                                                alert("An error occurred while booking the service.");
-                                                console.error(error);
-                                            });
-                                    });
-                                });
-                            </script>
+                            <button type="submit" class="btn btn-success">Book Now</button>
                         </form>
                     </div>
                 </div>
@@ -70,6 +42,19 @@
         </div>
         {% endfor %}
     </div>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+    <div>
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            <p>{{ message }}</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
 
     <footer>
         <p>&copy; 2024 Home Ease. All Rights Reserved.</p>

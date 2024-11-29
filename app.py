@@ -147,8 +147,10 @@ def block_user(user_id):
     if user:
         user.is_blocked = True
         db.session.commit()
-        return jsonify({"status": "success", "message": "User blocked."}), 200
-    return jsonify({"status": "error", "message": "User not found."}), 404
+        flash("User Blocked sucessfully" , "success")
+        return redirect(url_for("admin_dashboard"))
+    flash("User Not Found", "warning")
+    return redirect(url_for("admin_dashboard"))
 
 # Add New Service
 # Add New Service
@@ -216,38 +218,40 @@ def signup():
     return render_template('home.html')
 
 
-@app.route('/login', methods=['GET','POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
         user = User.query.filter_by(email=email).first()
-        if user and user.password == password:
-            # Login successful, redirect to the home page or dashboard
+
+        if password== user.password:  # Validate password securely
+            session['logged_in'] = True
+            session['user_id'] = user.id  # Save user_id in the session
+            
             if user.role == "admin":
                 session['admin_logged_in'] = True
                 return redirect(url_for('admin_dashboard'))
-            session['logged_in'] = True
-            message = {"type":"success","body":"Login Successful"}
-            return render_template('home.html',message=message)
-            
+            elif user.role == "serviceProvider":
+                return redirect(url_for('professional_dashboard'))
+            else:
+                return redirect(url_for('home'))  # Redirect customers to the home page
         else:
-            # Login failed, display an error message
-            pass
+            flash("Invalid credentials. Please try again.", "danger")
+    return render_template('home.html')
+
 
 from flask import jsonify
 
 @app.route('/book_service', methods=['POST'])
 def book_service():
     if not session.get('logged_in'):
-        return jsonify({"status": "error", "message": "You must be logged in to book a service."}), 401
+        flash("You must be logged in to book a service.", "danger")
+        return redirect(url_for('home'))
 
     # Get data from the form
     service_id = request.form.get('service_id')
     user_id = session.get('user_id')  # Assume user_id is stored in the session
-
-    if not service_id:
-        return jsonify({"status": "error", "message": "Service ID is required."}), 400
 
     # Check if the service exists
     service = Service.query.get(service_id)
@@ -267,6 +271,81 @@ def book_service():
 
     return jsonify({"status": "success", "message": "Service booked successfully!"}), 200
 
+@app.route('/professional_dashboard')
+def professional_dashboard():
+    if not session.get('logged_in'):
+        flash("You must be logged in to access the dashboard.", "danger")
+        return redirect(url_for('login'))
+
+    # Ensure user_id exists in the session
+    user_id = session.get('user_id')
+    if not user_id:
+        flash("Session expired or invalid. Please log in again.", "danger")
+        return redirect(url_for('login'))
+
+    # Fetch the logged-in user
+    user = User.query.get(user_id)
+    if not user:
+        flash("User not found. Please log in again.", "danger")
+        return redirect(url_for('login'))
+
+    # Ensure the user is a service provider
+    if user.role != 'serviceProvider':
+        flash("Unauthorized access to professional dashboard.", "danger")
+        return redirect(url_for('home'))
+
+    # Get the service professional's service type
+    professional_details = ProfessionalDetails.query.filter_by(user_id=user_id).first()
+    if not professional_details:
+        flash("Professional details not found. Please contact support.", "danger")
+        return redirect(url_for('home'))
+
+    # Fetch all service requests matching the professional's service type and 'requested' status
+    service_requests = ServiceRequest.query.join(Service).filter(
+        Service.type_of_service == professional_details.service_type,
+        ServiceRequest.service_status == 'requested'
+    ).all()
+
+    return render_template('professional_dashboard.html', service_requests=service_requests)
+
+@app.route('/accept_service_request/<int:request_id>', methods=['POST'])
+def accept_service_request(request_id):
+    # Check if the professional is logged in
+    if not session.get('logged_in'):
+        flash("You must be logged in to accept a service request.", "danger")
+        return redirect(url_for('login'))
+
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+
+    # Ensure the user is a service provider
+    if not user or user.role != 'serviceProvider':
+        flash("Unauthorized access.", "danger")
+        return redirect(url_for('home'))
+
+    # Fetch the service request
+    service_request = ServiceRequest.query.get(request_id)
+    if not service_request:
+        flash("Service request not found.", "danger")
+        return redirect(url_for('professional_dashboard'))
+
+    # Check if the service type matches the professional's service type
+    professional_details = ProfessionalDetails.query.filter_by(user_id=user_id).first()
+    if not professional_details:
+        flash("Professional details not found. Please contact support.", "danger")
+        return redirect(url_for('professional_dashboard'))
+
+    if service_request.service.type_of_service != professional_details.service_type:
+        flash("This service request does not match your service type.", "warning")
+        return redirect(url_for('professional_dashboard'))
+
+    # Update the service request with the professional's ID and status
+    service_request.professional_id = user_id
+    service_request.service_status = 'assigned'
+    db.session.commit()
+
+    flash("Service request accepted successfully!", "success")
+    return redirect(url_for('professional_dashboard'))
 
 
 @app.route('/cleaning_services')
@@ -297,10 +376,9 @@ def pet_care_services():
 
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['GET', 'POST'])
 def logout():
-    session.pop('logged_in')
-
+    session.clear()
     return redirect(url_for('home'))
 
 
