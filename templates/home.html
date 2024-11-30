@@ -16,7 +16,7 @@
 <body>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Home Ease</a>
+            <a class="navbar-brand" href="/">Home Ease</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -56,7 +56,7 @@
                         </svg>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#">History</a></li>
+                        <li><a class="dropdown-item" href="{{url_for('customer_history')}}">History</a></li>
                         <li><a class="dropdown-item" href="{{url_for('logout')}}">Log out</a></li>
                     </ul>
                     {% else %}
@@ -83,17 +83,17 @@
             </div>
     </nav>
     {% with messages = get_flashed_messages(with_categories=True) %}
-{% if messages %}
-<div>
-    {% for category, message in messages %}
-    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
-        <p>{{ message }}</p>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    {% if messages %}
+    <div>
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            <p>{{ message }}</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
-{% endif %}
-{% endwith %}
+    {% endif %}
+    {% endwith %}
 
     <div class="hero-section">
         <h1>Welcome to Home Ease</h1>

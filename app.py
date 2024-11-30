@@ -117,12 +117,12 @@ def delete_service(service_id):
         db.session.delete(service)
         db.session.commit()
         # message = {"type":"success","body":"Service deleted successfully."}
-        return jsonify({"status": "success", "message": "Service deleted successfully."}), 200
+        flash ('Service deleted successfully.', 'success')
+        return redirect(url_for("admin_dashboard"))
         # return render_template("admin_dashboard.html",message=message)
   
-    message = {"type":"danger","body":"Service not found."}
-    # return render_template("admin_dashboard.html",message=message)
-    return jsonify({"status": "error", "message": "Service not found."}), 404
+    flash("Service Not Found", "danger")    
+    return render_template("admin_dashboard.html")
 
 # Approve Service Professional
 @app.route('/admin/approve_professional/<int:pro_id>', methods=['POST'])
@@ -134,8 +134,10 @@ def approve_professional(pro_id):
     if professional:
         professional.is_approved = True
         db.session.commit()
-        return jsonify({"status": "success", "message": "Professional approved."}), 200
-    return jsonify({"status": "error", "message": "Professional not found."}), 404
+        flash("Professional approved.", "sucsess")
+        return redirect(url_for("admin_dashboard"))
+    flash("Professional not found.", "danger")
+    return redirect(url_for("admin_dashboard"))
 
 # Block User
 @app.route('/admin/block_user/<int:user_id>', methods=['POST'])
@@ -174,8 +176,8 @@ def add_service():
     )
     db.session.add(new_service)
     db.session.commit()
-
-    return jsonify({"status": "success", "message": "Service added successfully."}), 201
+    flash("Service added successfully.", "sucsses")
+    return redirect(url_for("admin_dashboard"))
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -214,6 +216,9 @@ def signup():
         db.session.add(new_user)
         db.session.commit()
         message = {"type":"success","body":"User Created Successfully"}
+        session['logged_in']=True
+        session['user_id'] = new_user.id
+        flash("User logged successfully", "success")
         return render_template('home.html',message=message)
     return render_template('home.html')
 
@@ -270,6 +275,24 @@ def book_service():
     db.session.commit()
     flash("Service booked successfully!", "success")
     return redirect(url_for('home'))
+
+@app.route('/customer_history')
+def customer_history():
+    if not session.get('logged_in'):
+        flash("You must be logged in to view your service history.", "danger")
+        return redirect(url_for('login'))
+
+    user_id = session.get('user_id')
+    user = User.query.get(user_id)
+
+    if not user or user.role != 'customer':
+        flash("Unauthorized access.", "danger")
+        return redirect(url_for('home'))
+
+    # Fetch all service requests for the logged-in customer
+    service_requests = ServiceRequest.query.filter_by(customer_id=user_id).all()
+
+    return render_template('customer_history.html', service_requests=service_requests)
 
 
 @app.route('/professional_dashboard')

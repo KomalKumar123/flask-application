@@ -36,9 +36,9 @@ img {
 
 /* Hero Section */
 .hero-section {
-    background-image: url('media/household-services.jpg');
-    background-size: cover;
-    background-position: center;
+    background-image: url('/static/images/hero-bg.jpg');
+    background-size: cover; /* Adjust to show the entire image without cropping */
+    background-repeat: no-repeat;
     color: #fff;
     text-align: center;
     padding: 100px 20px;
